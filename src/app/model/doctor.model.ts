@@ -4,6 +4,6 @@ export class DoctorModel {
   id?: number;
   name?: string;
   surname?: string;
-  specialization?: SpecializationModel;
+  specializationType?: SpecializationModel;
   dateOfEmployment?: string;
 }

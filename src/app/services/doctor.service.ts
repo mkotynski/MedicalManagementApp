@@ -12,7 +12,7 @@ type EntityArrayResponseType = HttpResponse<DoctorModel[]>;
   providedIn: 'root'
 })
 export class DoctorService {
-  public resourceURL = SERVER_API_URL + '/api/doctors';
+  public resourceURL = SERVER_API_URL + '/api/doctor';
 
 
   constructor(protected http: HttpClient) {

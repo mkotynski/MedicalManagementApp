@@ -5,6 +5,7 @@ import {CalendarComponent} from './components/calendar/calendar.component';
 import {MedicalVisitComponent} from './components/medical-visit/medical-visit.component';
 import {ReferencesComponent} from './components/references/references.component';
 import {EdmComponent} from './components/edm/edm.component';
+import {RegistrationForAnAppointmentComponent} from './components/registration-for-an-appointment/registration-for-an-appointment.component';
 
 const routes: Routes = [
   {
@@ -22,6 +23,10 @@ const routes: Routes = [
   {
     path: 'appointments',
     component: MedicalVisitComponent
+  },
+  {
+    path: 'register-for-an-appointment',
+    component: RegistrationForAnAppointmentComponent
   },
   {
     path: 'references',

@@ -21,6 +21,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {ToastrModule} from 'ngx-toastr';
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
+import {CommonModule} from '@angular/common';
 
 export function HttpLoaderFactory(httpClient: HttpClient) {
   return new TranslateHttpLoader(httpClient);
@@ -39,6 +40,7 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
   ],
   imports: [
     MaterialModule,
+    CommonModule,
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
