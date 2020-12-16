@@ -6,6 +6,8 @@ import {MedicalVisitComponent} from './components/medical-visit/medical-visit.co
 import {ReferencesComponent} from './components/references/references.component';
 import {EdmComponent} from './components/edm/edm.component';
 import {RegistrationForAnAppointmentComponent} from './components/registration-for-an-appointment/registration-for-an-appointment.component';
+import {ChooseDateForAnAppointmentComponent} from './components/choose-date-for-an-appointment/choose-date-for-an-appointment.component';
+import {SetAvailableDateForTheVisitComponent} from './components/doctor/set-available-date-for-the-visit/set-available-date-for-the-visit.component';
 
 const routes: Routes = [
   {
@@ -27,6 +29,14 @@ const routes: Routes = [
   {
     path: 'register-for-an-appointment',
     component: RegistrationForAnAppointmentComponent
+  },
+  {
+    path: 'register-for-an-appointment/:id/choose-date',
+    component: ChooseDateForAnAppointmentComponent
+  },
+  {
+    path: 'set-available-date-for-the-visit',
+    component: SetAvailableDateForTheVisitComponent
   },
   {
     path: 'references',

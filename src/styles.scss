@@ -53,7 +53,7 @@ body {
 }
 
 .router {
-  margin-left:30px;
+  margin-left: 30px;
 }
 
 .primary {
@@ -147,19 +147,20 @@ body {
 @import '~bootstrap/scss/bootstrap';
 
 
-.row{
-  display:flex;
+.row {
+  display: flex;
 }
 
-.column{
-  display:flex;
+.column {
+  display: flex;
   flex-direction: column;
 }
 
-.box-content {
-  border: 1px solid red;
+.box-content {;
   min-width: 100%;
   min-height: 200px;
+  margin-bottom: 20px;
+  background-color: #eef4ff;
 }
 
 .box-avatar {
@@ -172,7 +173,6 @@ body {
 }
 
 .box-info-data {
-  border: 1px solid blue;
   width: 250px;
   height: 180px;
   margin-top: 10px;
@@ -181,15 +181,16 @@ body {
 
 .margin-10px {
   margin: 10px;
-  border:1px solid red;
+}
 
+.margin-top-20px {
+  margin-top: 20px;
 }
 
 .box-stars {
-  border: 1px solid blue;
   height: 80px;
   font-size: 40px;
-  padding:10px;
+  padding: 10px;
 }
 
 

@@ -1,13 +1,13 @@
-<div class="content">
+<div class="content" xmlns:th="http://www.w3.org/1999/xhtml">
   <ng-template ngFor let-item [ngForOf]="doctors" let-i="index">
     <div class="box-content row">
-      <div class="box-avatar"></div>
-          <div class="box-info-data column">
-            <div class="margin-10px font-size-26">{{item.name}} {{item.surname}}</div>
-            <div class="margin-10px">{{item.specializationType.name}}</div>
-            <div style="margin-top:auto;margin-left:auto;font-size:17px;"><button mat-button> register for the visit </button></div>
-          </div>
-          <div class="box-stars">*****</div>
+      <div class="box-avatar"><img style="width:180px;height: 180px;" src="assets/images/doctor.png" th:src="@{assets/images/doctor.png}"/></div>
+      <div class="box-info-data column">
+        <div class="margin-10px font-size-26">{{item.name}} {{item.surname}}</div>
+        <div class="margin-10px">{{item.specializationType.name}}</div>
+        <div style="margin-top:auto;font-size:17px;"><button [routerLink]="'./'+item.id+'/choose-date'" mat-button class="btn btn-primary"> register for the visit </button></div>
+      </div>
+      <div class="box-stars">*****</div>
 
     </div>
   </ng-template>

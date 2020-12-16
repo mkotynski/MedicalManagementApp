@@ -21,7 +21,15 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {ToastrModule} from 'ngx-toastr';
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
-import {CommonModule} from '@angular/common';
+import {CommonModule, DatePipe} from '@angular/common';
+import {
+  ChooseDateForAnAppointmentComponent, ConfirmDateDialogComponent,
+  //DialogRegisterForTheVisitDialogComponent
+} from './components/choose-date-for-an-appointment/choose-date-for-an-appointment.component';
+import {
+  AddNewAvailableDateDialogComponent,
+  SetAvailableDateForTheVisitComponent
+} from './components/doctor/set-available-date-for-the-visit/set-available-date-for-the-visit.component';
 
 export function HttpLoaderFactory(httpClient: HttpClient) {
   return new TranslateHttpLoader(httpClient);
@@ -37,6 +45,10 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     MedicalVisitComponent,
     ReferencesComponent,
     EdmComponent,
+    ChooseDateForAnAppointmentComponent,
+    ConfirmDateDialogComponent,
+    SetAvailableDateForTheVisitComponent,
+    AddNewAvailableDateDialogComponent
   ],
   imports: [
     MaterialModule,
@@ -58,7 +70,7 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     }),
     ToastrModule.forRoot()
   ],
-  providers: [],
+  providers: [DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
