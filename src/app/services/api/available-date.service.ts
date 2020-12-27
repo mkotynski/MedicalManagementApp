@@ -1,13 +1,13 @@
 import {Injectable} from '@angular/core';
-import {SERVER_API_URL} from '../app.constants';
+import {SERVER_API_URL} from '../../app.constants';
 import {HttpClient, HttpResponse} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {createRequestOption} from '../utils/request-util';
-import {AvailableDateModel} from '../model/available-date.model';
+import {createRequestOption} from '../../utils/request-util';
+import {AvailableDateModel} from '../../model/available-date.model';
 import {CalendarEvent} from 'angular-calendar';
 import {map} from 'rxjs/operators';
-import {colors} from '../utils/colors';
-import {DateManagerService} from './date-manager.service';
+import {colors} from '../../utils/colors';
+import {DateManagerService} from '../other/date-manager.service';
 import {endOfDay, startOfDay,} from 'date-fns';
 
 type EntityResponseType = HttpResponse<AvailableDateModel>;
@@ -64,5 +64,27 @@ export class AvailableDateService {
         })
       );
   }
+
+  findAllOfDoctor(): Observable<CalendarEvent<{ availableDateModel: AvailableDateModel }>[]> {
+    return this.http
+      .get(`${this.resourceURL}/doctor/find-all-available-dates`)
+      .pipe(
+        map(({results}: { results: AvailableDateModel[] }) => {
+          return results.map((availableDateModel: AvailableDateModel) => {
+            return {
+              title: availableDateModel.doctor.name + ' ' + availableDateModel.doctor.surname,
+              start: new Date(this.dateManagerService.parseDate(availableDateModel.date)),
+              end:  new Date(this.dateManagerService.parseDate(availableDateModel.endDate)),
+              color: this.dateManagerService.returnEventColor(availableDateModel.reserved),
+              meta: {
+                availableDateModel,
+              },
+            };
+          });
+        })
+      );
+  }
+
+
 
 }

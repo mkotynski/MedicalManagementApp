@@ -1,9 +1,9 @@
 import {Injectable} from '@angular/core';
-import {SERVER_API_URL} from '../app.constants';
+import {SERVER_API_URL} from '../../app.constants';
 import {HttpClient, HttpResponse} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {createRequestOption} from '../utils/request-util';
-import {PatientModel} from '../model/patient.model';
+import {createRequestOption} from '../../utils/request-util';
+import {PatientModel} from '../../model/patient.model';
 
 type EntityResponseType = HttpResponse<PatientModel>;
 type EntityArrayResponseType = HttpResponse<PatientModel[]>;
@@ -37,6 +37,10 @@ export class PatientService {
   query(req?: any): Observable<EntityArrayResponseType> {
     const options = createRequestOption(req);
     return this.http.get<PatientModel[]>(this.resourceURL, {params: options, observe: 'response'});
+  }
+
+  patient(): Observable<Object> {
+    return this.http.get<Object>(`${SERVER_API_URL}/api/actual-patient`, {observe: 'response'});
   }
 
 }

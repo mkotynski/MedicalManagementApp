@@ -10,13 +10,14 @@ import {VisitTypeModel} from '../../../model/visit-type.model';
 import {DoctorModel} from '../../../model/doctor.model';
 import {PatientModel} from '../../../model/patient.model';
 import {MedicalVisitModel} from '../../../model/medical-visit.model';
-import {AvailableDateService} from '../../../services/available-date.service';
-import {DateManagerService} from '../../../services/date-manager.service';
-import {PatientService} from '../../../services/patient.service';
-import {DoctorService} from '../../../services/doctor.service';
-import {MedicalVisitService} from '../../../services/medical-visit.service';
+import {AvailableDateService} from '../../../services/api/available-date.service';
+import {DateManagerService} from '../../../services/other/date-manager.service';
+import {PatientService} from '../../../services/api/patient.service';
+import {DoctorService} from '../../../services/api/doctor.service';
+import {MedicalVisitService} from '../../../services/api/medical-visit.service';
 import {RepeatablePeriod} from '../../../enum/repeatable-period.enum';
 import {VisitDurationTime} from '../../../enum/visit-duration-time.enum';
+import {HttpClient} from '@angular/common/http';
 
 
 @Component({
@@ -48,10 +49,12 @@ export class SetAvailableDateForTheVisitComponent implements OnInit {
               private dateManager: DateManagerService,
               private medicalVisitService: MedicalVisitService,
               private patientService: PatientService,
-              private doctorService: DoctorService) {
+              private doctorService: DoctorService
+  ) {
   }
 
   ngOnInit(): void {
+
     this.doctorId = +this.route.snapshot.paramMap.get('id');
     this.fetchEvents();
 
@@ -65,7 +68,7 @@ export class SetAvailableDateForTheVisitComponent implements OnInit {
   }
 
   fetchEvents(): void {
-    this.events$ = this.availableDateService.findAllByDoctorId(1);
+    this.events$ = this.availableDateService.findAllOfDoctor();
   }
 
   dayClicked({
@@ -111,8 +114,8 @@ export class SetAvailableDateForTheVisitComponent implements OnInit {
     }, error => {
       this.showOperationErrorToast();
     });
-    //this.availableDate = {};
     this.availableDate = { doctor: this.doctor};
+    this.fetchEvents();
   }
 
   eventHourSegmentClicked(date: Date): void {

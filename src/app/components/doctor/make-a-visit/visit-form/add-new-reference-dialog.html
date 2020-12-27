@@ -1,0 +1,32 @@
+<h2 mat-dialog-title> FORMULARZ NOWEGO SKIEROWANIA</h2>
+<mat-dialog-content class="mat-typography">
+  <form class="row margin-auto">
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>KOD SKIEROWANIA:</mat-label>
+      <input matInput name="reference" disabled value="<WYGENEROWANO>"/>
+    </mat-form-field>
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>DATA:</mat-label>
+      <input matInput name="date" disabled value="{{today}}"/>
+    </mat-form-field>
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>WYBIERZ DATĘ WAŻNOŚCI</mat-label>
+      <input matInput [(ngModel)]="data.reference.expirationDate" [matDatepicker]="picker" name="datePicker">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label> SKIEROWANIE DO:</mat-label>
+      <input matInput type="text" [(ngModel)]="data.reference.referenceTo" name="referenceTo"/>
+    </mat-form-field>
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>DETALE DOTYCZĄCE SKIEROWANIA</mat-label>
+      <textarea [(ngModel)]="data.reference.details" name="referenceDetails" matInput></textarea>
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Anuluj</button>
+  <button mat-button [mat-dialog-close]="true">Dodaj pozycję</button>
+</mat-dialog-actions>
+

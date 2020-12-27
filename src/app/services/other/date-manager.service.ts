@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
-import {colors} from '../utils/colors';
+import {colors} from '../../utils/colors';
+import {toInteger} from '@ng-bootstrap/ng-bootstrap/util/util';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,8 @@ export class DateManagerService {
 
   parseDate(input) {
     const parts = input.match(/(\d+)/g);
-    return new Date(parts[0], parts[1] - 1, parts[2], parts[3], parts[4], parts[5], parts[5]); // months are 0-based
+
+    return new Date(parts[0], parts[1] - 1, parts[2], Number(parts[3])+1, parts[4], parts[5], parts[5]); // months are 0-based
   }
 
   getTimezoneOffsetString(date: Date): string {

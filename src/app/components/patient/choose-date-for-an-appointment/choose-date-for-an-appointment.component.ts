@@ -5,17 +5,17 @@ import {Observable} from 'rxjs';
 import {ToastrService} from 'ngx-toastr';
 import {ActivatedRoute} from '@angular/router';
 import {isSameDay, isSameMonth} from 'date-fns';
-import {AvailableDateModel} from '../../model/available-date.model';
-import {AvailableDateService} from '../../services/available-date.service';
-import {DateManagerService} from '../../services/date-manager.service';
-import {MedicalVisitService} from '../../services/medical-visit.service';
-import {MedicalVisitModel} from '../../model/medical-visit.model';
-import {VisitTypeService} from '../../services/visit-type.service';
-import {VisitTypeModel} from '../../model/visit-type.model';
-import {DoctorService} from '../../services/doctor.service';
-import {DoctorModel} from '../../model/doctor.model';
-import {PatientService} from '../../services/patient.service';
-import {PatientModel} from '../../model/patient.model';
+import {AvailableDateModel} from '../../../model/available-date.model';
+import {AvailableDateService} from '../../../services/api/available-date.service';
+import {DateManagerService} from '../../../services/other/date-manager.service';
+import {MedicalVisitService} from '../../../services/api/medical-visit.service';
+import {MedicalVisitModel} from '../../../model/medical-visit.model';
+import {VisitTypeService} from '../../../services/api/visit-type.service';
+import {VisitTypeModel} from '../../../model/visit-type.model';
+import {DoctorService} from '../../../services/api/doctor.service';
+import {DoctorModel} from '../../../model/doctor.model';
+import {PatientService} from '../../../services/api/patient.service';
+import {PatientModel} from '../../../model/patient.model';
 
 @Component({
   selector: 'app-choose-date-for-an-appointment',
@@ -100,21 +100,24 @@ export class ChooseDateForAnAppointmentComponent implements OnInit {
   }
 
   save(availableDateModel: AvailableDateModel, confirmed: boolean, visitType: VisitTypeModel) {
+    console.log(availableDateModel);
     this.medicalVisit = {
       name: 'Visit#',
       date: availableDateModel.date,
+      endDate: availableDateModel.endDate,
       visitType,
       doctor: this.doctor,
       patient: this.patient
     };
+    console.log(this.medicalVisit);
     this.medicalVisitService.create(this.medicalVisit).subscribe(data => {
       this.showOperationsSuccessfulToast();
     }, error => {
       this.showOperationErrorToast();
     });
     availableDateModel.reserved = true;
+    console.log('id ad:' + availableDateModel.id);
     this.availableDateService.update(availableDateModel).subscribe(data => {
-      this.showOperationsSuccessfulToast();
     }, error => {
       this.showOperationErrorToast();
     });
@@ -122,16 +125,15 @@ export class ChooseDateForAnAppointmentComponent implements OnInit {
   }
 
   eventClicked(event: CalendarEvent<{ availableDateModel: AvailableDateModel }>): void {
-    this.openDialog(event.meta.availableDateModel);
-    console.log(event.meta.availableDateModel);
+    !event.meta.availableDateModel.reserved ? this.openDialog(event.meta.availableDateModel) : this.showOperationErrorToast();
   }
 
   showOperationsSuccessfulToast() {
-    this.toastrService.show('TEXTS.OPERATION_END_SUCCESSFUL', 'Title');
+    this.toastrService.success('TEXTS.OPERATION_END_SUCCESSFUL', 'Title');
   }
 
   showOperationErrorToast() {
-    this.toastrService.show('TEXTS.OPERATION_END_WITH_ERROR', 'Title');
+    this.toastrService.error('TEXTS.OPERATION_END_WITH_ERROR', 'Title');
   }
 }
 
@@ -148,7 +150,7 @@ interface DialogData {
 })
 export class ConfirmDateDialogComponent implements OnInit {
   visitTypes: VisitTypeModel[];
-
+  date: Date;
   constructor(
     public dialogRef: MatDialogRef<ConfirmDateDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
@@ -161,7 +163,7 @@ export class ConfirmDateDialogComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(new Date(this.data.availableDateModel.date));
+    this.date = new Date(this.data.availableDateModel.date);
     this.visitTypeService.query().subscribe(data => {
       this.visitTypes = data.body;
     });

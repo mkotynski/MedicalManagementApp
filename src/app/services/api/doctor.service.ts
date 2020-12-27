@@ -1,9 +1,9 @@
 import {Injectable} from '@angular/core';
-import {SERVER_API_URL} from '../app.constants';
+import {SERVER_API_URL} from '../../app.constants';
 import {HttpClient, HttpResponse} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {createRequestOption} from '../utils/request-util';
-import {DoctorModel} from '../model/doctor.model';
+import {createRequestOption} from '../../utils/request-util';
+import {DoctorModel} from '../../model/doctor.model';
 
 type EntityResponseType = HttpResponse<DoctorModel>;
 type EntityArrayResponseType = HttpResponse<DoctorModel[]>;

@@ -1,9 +1,9 @@
 import {Injectable} from '@angular/core';
-import {SERVER_API_URL} from '../app.constants';
+import {SERVER_API_URL} from '../../app.constants';
 import {HttpClient, HttpResponse} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {createRequestOption} from '../utils/request-util';
-import {VisitTypeModel} from '../model/visit-type.model';
+import {createRequestOption} from '../../utils/request-util';
+import {VisitTypeModel} from '../../model/visit-type.model';
 
 type EntityResponseType = HttpResponse<VisitTypeModel>;
 type EntityArrayResponseType = HttpResponse<VisitTypeModel[]>;

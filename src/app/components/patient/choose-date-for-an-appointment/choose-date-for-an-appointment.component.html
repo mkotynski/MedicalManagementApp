@@ -28,6 +28,8 @@
       *ngSwitchCase="'week'"
       [viewDate]="viewDate"
       [events]="events"
+      [dayStartHour]="9"
+      [dayEndHour]="17"
       (eventClicked)="eventClicked($event.event)"
     >
     </mwl-calendar-week-view>
