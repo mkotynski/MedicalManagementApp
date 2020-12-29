@@ -1,6 +1,9 @@
 import { BrowserModule } from '@angular/platform-browser';
 import {APP_INITIALIZER, NgModule} from '@angular/core';
 
+import { registerLocaleData } from '@angular/common';
+import localePl from '@angular/common/locales/pl';
+import localeEn from '@angular/common/locales/en';
 import { AppComponent } from './app.component';
 import { CalendarComponent } from './components/patient/calendar/calendar.component';
 import {HomeComponent} from './components/home/home.component';
@@ -39,13 +42,20 @@ import {FlexModule} from '@angular/flex-layout';
 import {RolesService} from './services/auth/roles.service';
 import {IfRolesDirective} from './directives/if-roles.directive';
 import {
-  AddNewPositionReceiptDialogComponent, AddNewReferenceDialogComponent,
+  AddNewPositionReceiptDialogComponent, AddNewRecipeDialogComponent, AddNewReferenceDialogComponent,
   VisitFormComponent
 } from './components/doctor/make-a-visit/visit-form/visit-form.component';
+import { VisitsHistoryComponent } from './components/doctor/visits-history/visits-history.component';
+import { MoreVisitDetailsComponent } from './components/doctor/visits-history/more-visit-details/more-visit-details.component';
+import {VisitsHistoryPatientComponent} from './components/patient/visits-history/visits-history-patient.component';
+import {MoreVisitDetailsPatientComponent} from './components/patient/visits-history/more-visit-details/more-visit-details-patient.component';
 
 export function HttpLoaderFactory(httpClient: HttpClient) {
   return new TranslateHttpLoader(httpClient);
 }
+
+//registerLocaleData(localePl);
+registerLocaleData(localeEn);
 
 @NgModule({
   declarations: [
@@ -64,10 +74,16 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     MakeAVisitComponent,
     AddNewPositionReceiptDialogComponent,
     AddNewReferenceDialogComponent,
-
+    AddNewRecipeDialogComponent,
     IfRolesDirective,
 
-    VisitFormComponent
+    VisitFormComponent,
+
+    VisitsHistoryComponent,
+
+    MoreVisitDetailsComponent,
+    MoreVisitDetailsPatientComponent,
+    VisitsHistoryPatientComponent
   ],
   imports: [
     MaterialModule,

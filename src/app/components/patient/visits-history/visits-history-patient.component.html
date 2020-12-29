@@ -1,0 +1,41 @@
+<table mat-table [dataSource]="visitsHistory" class="full-width" matSort>
+
+  <ng-container matColumnDef="ID">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>NR</th>
+    <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="DATA">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>Data i godzina</th>
+    <td mat-cell *matCellDef="let element"> {{element.date | date: 'dd.MM.YYY hh:mm' }} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="PATIENT">
+    <th mat-header-cell *matHeaderCellDef
+        mat-sort-header>Pacjent
+    </th>
+    <td mat-cell *matCellDef="let element"> {{element.patient.name}} {{element.patient.surname}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="DESCRIPTION">
+    <th mat-header-cell *matHeaderCellDef
+        mat-sort-header>Opis wizyty
+    </th>
+    <td mat-cell *matCellDef="let element"> {{element.description}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="MORE_DETAILS">
+    <th mat-header-cell *matHeaderCellDef
+        mat-sort-header>Szczegóły
+    </th>
+    <td mat-cell *matCellDef="let element"> <button mat-button [routerLink]="'./more-details/'+element.id">Więcej szczegółów</button></td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+  <!--  <tr class="mat-row" *matNoDataRow>-->
+  <!--    <td class="mat-cell" colspan="4">No data matching the filter "{{reference.value}}"</td>-->
+  <!--  </tr>-->
+</table>
+<mat-paginator #paginator [pageSizeOptions]="[10, 25, 50, 100]"></mat-paginator>

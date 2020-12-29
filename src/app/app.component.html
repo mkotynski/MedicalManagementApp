@@ -60,15 +60,17 @@
       <div class="container row">
         <div class="column left-side-nav">
           <ng-container *ifRoles='["patient"]'>
-            <button [routerLink]="'./calendar'" mat-raised-button mat-button color="primary"  class="button-style">Calendar</button>
-            <button [routerLink]="'./register-for-an-appointment'" mat-raised-button mat-button color="primary" class="button-style margin-top-2pp">Registration for an appointment</button>
-            <button [routerLink]="'./appointments'" mat-raised-button mat-button color="primary" class="button-style margin-top-2pp">Your appointments</button>
-            <button [routerLink]="'./references'" mat-raised-button mat-button color="primary" class="button-style margin-top-2pp">Your references</button>
-            <button [routerLink]="'./edm'" mat-raised-button mat-button color="primary" class="button-style margin-top-2pp">EDM</button>
+            <button [routerLink]="'./calendar'" mat-raised-button mat-button color="primary"  class="button-style margin-top-2pp">Kalendarz</button>
+            <button [routerLink]="'./register-for-an-appointment'" mat-raised-button mat-button color="primary" class="button-style margin-top-2pp">Rezerwacja terminu wizyty</button>
+            <button [routerLink]="'./patient-visit-history'" mat-raised-button mat-button color="primary" class="button-style margin-top-2pp">Historia wizyt</button>
+            <button [routerLink]="'./references'" mat-raised-button mat-button color="primary" class="button-style margin-top-2pp">Skierowania</button>
+            <button [routerLink]="'./recipes'" mat-raised-button mat-button color="primary" class="button-style margin-top-2pp">Recepty</button>
+<!--            <button [routerLink]="'./edm'" mat-raised-button mat-button color="primary" class="button-style margin-top-2pp">EDM</button>-->
           </ng-container>
           <ng-container *ifRoles='["doctor"]'>
-            <button  [routerLink]="'./set-available-date-for-the-visit'" mat-raised-button mat-button color="primary" class="button-style margin-top-2pp">Set available visit date</button>
-            <button [routerLink]="'./make-a-visit'" mat-raised-button mat-button color="primary" class="button-style margin-top-2pp">Make a visit</button>
+            <button [routerLink]="'./set-available-date-for-the-visit'" mat-raised-button mat-button color="primary" class="button-style margin-top-2pp">Dostępne terminy</button>
+            <button [routerLink]="'./make-a-visit'" mat-raised-button mat-button color="primary" class="button-style margin-top-2pp">Wykonaj wizytę</button>
+            <button [routerLink]="'./visits-history'" mat-raised-button mat-button color="primary" class="button-style margin-top-2pp">Historia wizyt</button>
           </ng-container>
         </div>
         <div class="router">

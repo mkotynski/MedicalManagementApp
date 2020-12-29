@@ -71,31 +71,10 @@ export class SetAvailableDateForTheVisitComponent implements OnInit {
     this.events$ = this.availableDateService.findAllOfDoctor();
   }
 
-  dayClicked({
-               date,
-               events,
-             }: {
-    date: Date;
-    events: CalendarEvent<{ availableDateModel: AvailableDateModel }>[];
-  }): void {
-    if (isSameMonth(date, this.viewDate)) {
-      if (
-        (isSameDay(this.viewDate, date) && this.activeDayIsOpen === true) ||
-        events.length === 0
-      ) {
-        this.activeDayIsOpen = false;
-      } else {
-        this.activeDayIsOpen = true;
-        this.viewDate = date;
-      }
-    }
-  }
-
-
   openDialog(date: Date): void {
     this.availableDate.date = date;
     const dialogRef = this.dialog.open(AddNewAvailableDateDialogComponent, {
-      width: '350px',
+      width: '30%',
       data:
         {
           availableDate: this.availableDate

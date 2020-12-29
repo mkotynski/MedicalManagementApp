@@ -1,9 +1,9 @@
-<h2 mat-dialog-title>Confirming available visit date</h2>
+<h2 mat-dialog-title>Potwierdzenie dostępnych terminów wizyt</h2>
 <mat-label class="font-size-26">{{ this.dateManager.transformDateTime(data.availableDate.date)}}</mat-label> <br>
-<div class="margin-top-20px"><mat-label> Are you sure to set this time as a possibly visit date?</mat-label></div>
+<div class="margin-top-20px"><mat-label> Jesteś pewien, że chcesz ustawić dostępny termin wizyty na ten dzień?</mat-label></div>
 <br>
-<mat-form-field>
-  <mat-label>Duration time</mat-label>
+<mat-form-field class="full-width">
+  <mat-label>Czas trwania</mat-label>
   <mat-select required [(ngModel)]="data.availableDate.duration" name="repeatablePeriod">
     <mat-option *ngFor="let v of durationKeys" [value]="v">
       {{ visitDurationTime[v] }}
@@ -12,12 +12,12 @@
 </mat-form-field>
 <br>
 <mat-checkbox [(ngModel)]="data.availableDate.repeatable">
-  Repeatable?
+  Powtórzyć?
 </mat-checkbox>
 <br>
 <ng-container *ngIf="data.availableDate.repeatable==true">
-  <mat-form-field>
-    <mat-label>Choose repeat period</mat-label>
+  <mat-form-field class="full-width">
+    <mat-label>Wybierze okres powtarzania terminu</mat-label>
     <mat-select required [(ngModel)]="data.availableDate.repeatablePeriod" name="repeatablePeriod">
       <mat-option *ngFor="let r of enumKeys" [value]="r">
         {{ repeatablePeriods[r] }}
@@ -26,8 +26,8 @@
   </mat-form-field>
 </ng-container>
 <mat-dialog-actions>
-  <button class="mat-raised-button" (click)="onNoClick()">Close</button>
+  <button class="mat-raised-button" (click)="onNoClick()">Zamknij</button>
   <button class="mat-raised-button mat-primary"
-          [mat-dialog-close]="data">Confirm</button>
+          [mat-dialog-close]="data">Zatwierdź</button>
 </mat-dialog-actions>
 

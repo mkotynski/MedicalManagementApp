@@ -12,6 +12,10 @@ import {ReferenceModel} from '../../../../model/reference.model';
 import {ReceiptModel} from '../../../../model/receipt.model';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {ReceiptPositionModel} from '../../../../model/receipt-position.model';
+import {VisitWithDetailsModel} from '../../../../model/visit-with-details.model';
+import {RecipeService} from '../../../../services/api/recipe.service';
+import {ReferenceService} from '../../../../services/api/reference.service';
+import {ReceiptService} from '../../../../services/api/receipt.service';
 
 @Component({
   selector: 'app-visit-form',
@@ -19,32 +23,37 @@ import {ReceiptPositionModel} from '../../../../model/receipt-position.model';
   styleUrls: ['./visit-form.component.css']
 })
 export class VisitFormComponent implements OnInit {
-  visit: MedicalVisitModel = {doctor: {}, patient: {}, visitType: {}};
+  visit: MedicalVisitModel = {doctor: {}, patient: {}, visitType: {}, visitStatus: 1};
   visitId: number;
-  visitStatuses = VisitStatusPolish;
+  visitStatusesPolish = VisitStatusPolish;
+  visitStatuses = VisitStatus;
   enumKeys = [];
   date = 'date';
   recipes: RecipeModel[] = [];
   showNewRecipeForm = false;
   newRecipe: RecipeModel = {
     expirationDate: new Date((new Date()).setDate((new Date()).getDate() + 30)),
-    recipePositionSet: []
-  }; // always plus 30 days at start
-  newRecipePosition: RecipePositionModel = {};
+    positions: []
+  };
   showNewRecipePositionForm = false;
   references: ReferenceModel[] = [];
   showNewReferenceForm = false;
   newReference: ReferenceModel = {expirationDate: new Date((new Date()).setDate((new Date()).getDate() + 30))};
-  // receipt
   newReceipt: ReceiptModel = {
     expirationDate: new Date((new Date()).setDate((new Date()).getDate() + 30)),
-    receiptPositionSet: []
+    positions: [],
+    receiptStatus: 1
   };
   newReceiptPosition: ReceiptPositionModel = {};
+  sumOfCosts = 0.0;
+  visitWithDetails: VisitWithDetailsModel = {};
 
   constructor(private toastrService: ToastrService,
               private route: ActivatedRoute,
               private medicalVisitService: MedicalVisitService,
+              private recipeService: RecipeService,
+              private referenceService: ReferenceService,
+              private receiptService: ReceiptService,
               private clonerService: ClonerService,
               public dialog: MatDialog,
               private dateManagerService: DateManagerService) {
@@ -54,7 +63,9 @@ export class VisitFormComponent implements OnInit {
   ngOnInit(): void {
     this.visitId = +this.route.snapshot.paramMap.get('id');
     this.getMedicalVisit();
-    console.log(this.newRecipe);
+    this.getRecipes();
+    this.getReferences();
+    this.getReceipt();
   }
 
   getMedicalVisit() {
@@ -67,13 +78,40 @@ export class VisitFormComponent implements OnInit {
     });
   }
 
+  getRecipes() {
+    this.recipeService.findByMedicalVisitId(this.visitId).subscribe(data => {
+      this.recipes = data.body;
+    }, error => {
+      this.toastrService.error('You have no permission to look up at this content', 'Access denied!');
+    });
+  }
+
+  getReferences() {
+    this.referenceService.findByMedicalVisitId(this.visitId).subscribe(data => {
+      this.references = data.body;
+    }, error => {
+      this.toastrService.error('You have no permission to look up at this content', 'Access denied!');
+    });
+  }
+
+  getReceipt() {
+    this.receiptService.findByMedicalVisitId(this.visitId).subscribe(data => {
+      this.newReceipt = data.body;
+      this.newReceipt.positions.forEach(e => {
+        this.sumOfCosts += e.value;
+      });
+    }, error => {
+      this.toastrService.error('You have no permission to look up at this content', 'Access denied!');
+    });
+  }
+
   addNewRecipe() {
-    if (this.newRecipe.recipePositionSet.length > 0) {
+    if (this.newRecipe.positions.length > 0) {
       this.recipes.push(this.clonerService.deepClone(this.newRecipe));
       this.addNewRecipeForm();
       this.newRecipe = {
         expirationDate: new Date((new Date()).setDate((new Date()).getDate() + 30)),
-        recipePositionSet: []
+        positions: []
       };
       this.toastrService.success('Poprawnie dodano recepte', 'SUKCES');
     } else {
@@ -86,27 +124,12 @@ export class VisitFormComponent implements OnInit {
     this.showNewReferenceForm = false;
   }
 
-  addNewRecipePositionForm() {
-    this.showNewRecipePositionForm = !this.showNewRecipePositionForm;
-    this.newRecipePosition = {};
-  }
-
-  addNewRecipePosition() {
-    if (this.newRecipePosition.description != null) {
-      this.newRecipe.recipePositionSet.push(this.clonerService.deepClone(this.newRecipePosition));
-      this.newRecipePosition = {};
-      this.toastrService.success('Poprawnie dodano pozycję recepty', 'SUKCES');
-      this.addNewRecipePositionForm();
-    } else {
-      this.toastrService.error('Nie wypełniono wszystkich wymaganych pól', 'BŁĄD');
-    }
-  }
 
   cancelNewRecipe() {
     this.newRecipe = {};
     this.newRecipe = {
       expirationDate: new Date((new Date()).setDate((new Date()).getDate() + 30)),
-      recipePositionSet: []
+      positions: []
     };
     this.addNewRecipeForm();
   }
@@ -148,7 +171,7 @@ export class VisitFormComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      this.newReceiptPosition = result;
+      this.addNewReceiptPosition();
     });
   }
 
@@ -163,6 +186,57 @@ export class VisitFormComponent implements OnInit {
       this.addNewReference();
     });
   }
+
+  openRecipeDialog() {
+    console.log(this.newReference);
+    const dialogRef = this.dialog.open(AddNewRecipeDialogComponent, {
+      width: '40%',
+      data: {recipe: this.newRecipe}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.addNewRecipe();
+    });
+  }
+
+  private addNewReceiptPosition() {
+    if (this.isReceiptValid()) {
+      this.newReceipt.positions.push(this.clonerService.deepClone(this.newReceiptPosition));
+      this.newReceipt.positions.forEach(e => {
+        this.sumOfCosts += e.value;
+        }
+      );
+      this.newReceiptPosition = { };
+      this.toastrService.success('Poprawnie dodano pozycję rachunku', 'SUKCES');
+    } else {
+      this.toastrService.error('Nie wypełniono wszystkich wymaganych pól', 'BŁĄD');
+    }
+  }
+
+  private isReceiptValid() {
+    if (this.newReceiptPosition.description != null
+      && this.newReceiptPosition.value != null
+      && this.newReceiptPosition.value >= 0.0) {
+      return true;
+    }
+    return false;
+  }
+
+  saveVisit() {
+    this.visitWithDetails = { medicalVisit: this.visit, receipt: this.newReceipt, recipes: this.recipes, references: this.references };
+    console.log(this.visitWithDetails);
+    this.medicalVisitService.saveVisitWithDetails(this.visitWithDetails).subscribe(data => {
+      console.log(data);
+      this.toastrService.success('Poprawnie zapisano zmiany dotyczące wizyty', 'SUKCES');
+    }, error => {
+      this.toastrService.error('Wystąpił błąd przy zapisywaniu zmian', 'BŁĄD');
+    });
+  }
+
+  deleteReceiptPosition(receiptPos: ReceiptPositionModel) {
+    this.newReceipt.positions = this.newReceipt.positions.filter(item => item !== receiptPos);
+    this.toastrService.success('Usunięto pozycje z rachunku', 'SUKCES');
+  }
 }
 
 export interface DialogData {
@@ -173,6 +247,10 @@ export interface DialogDataReference {
   reference: ReferenceModel;
 }
 
+export interface DialogDataRecipe {
+  recipe: RecipeModel;
+}
+
 @Component({
   selector: 'app-add-new-position-receipt-dialog',
   templateUrl: 'add-new-position-receipt-dialog.html',
@@ -181,7 +259,8 @@ export class AddNewPositionReceiptDialogComponent {
 
   constructor(
     public dialogRef: MatDialogRef<AddNewPositionReceiptDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
+    @Inject(MAT_DIALOG_DATA) public data: DialogData) {
+  }
 
   onNoClick(): void {
     this.dialogRef.close();
@@ -205,4 +284,45 @@ export class AddNewReferenceDialogComponent {
   onNoClick(): void {
     this.dialogRef.close();
   }
+}
+
+
+@Component({
+  selector: 'app-add-new-recipe-dialog',
+  templateUrl: 'add-new-recipe-dialog.html',
+})
+export class AddNewRecipeDialogComponent {
+  today: string;
+  showNewRecipePositionForm = false;
+  newRecipePosition: RecipePositionModel = {};
+
+  constructor(
+    public dialogRef: MatDialogRef<AddNewRecipeDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogDataRecipe,
+    private dateManagerService: DateManagerService,
+    private clonerService: ClonerService,
+    private toastrService: ToastrService) {
+    this.today = this.dateManagerService.transform(new Date());
+  }
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+
+  addNewRecipePositionForm() {
+    this.showNewRecipePositionForm = !this.showNewRecipePositionForm;
+    this.newRecipePosition = {};
+  }
+
+  addNewRecipePosition() {
+    if (this.newRecipePosition.description != null) {
+      this.data.recipe.positions.push(this.clonerService.deepClone(this.newRecipePosition));
+      this.newRecipePosition = {};
+      this.toastrService.success('Poprawnie dodano pozycję recepty', 'SUKCES');
+      this.addNewRecipePositionForm();
+    } else {
+      this.toastrService.error('Nie wypełniono wszystkich wymaganych pól', 'BŁĄD');
+    }
+  }
+
 }

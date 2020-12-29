@@ -8,6 +8,7 @@ import {map} from 'rxjs/operators';
 import {colors} from '../../utils/colors';
 import {CalendarEvent} from 'angular-calendar';
 import {DateManagerService} from '../other/date-manager.service';
+import {VisitWithDetailsModel} from '../../model/visit-with-details.model';
 
 type EntityResponseType = HttpResponse<MedicalVisitModel>;
 type EntityArrayResponseType = HttpResponse<MedicalVisitModel[]>;
@@ -87,4 +88,13 @@ export class MedicalVisitService {
   findMedicalVisitOfSubject(id: number): Observable<EntityResponseType>{
     return this.http.get<MedicalVisitModel>(`${this.resourceURL}/find-medical-visit/${id}`, {observe: 'response'});
   }
+
+  saveVisitWithDetails(visitWithDetailsModel: VisitWithDetailsModel): Observable<HttpResponse<VisitWithDetailsModel>> {
+    return this.http.put<VisitWithDetailsModel>(`${this.resourceURL}/save-visit-with-details`, visitWithDetailsModel, {observe: 'response'});
+  }
+
+  findVisitsHistoryOfSubject(): Observable<EntityArrayResponseType>{
+    return this.http.get<MedicalVisitModel[]>(`${this.resourceURL}/find-medical-visit-by-status-done`, {observe: 'response'});
+  }
+
 }

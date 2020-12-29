@@ -1,3 +1,55 @@
-<div class="content">
-  fdsf
-</div>
+<table mat-table [dataSource]="references" class="full-width" matSort>
+
+  <ng-container matColumnDef="CODE">
+    <th mat-header-cell style="max-width: 100px;" *matHeaderCellDef mat-sort-header>Kod skierowania</th>
+    <td mat-cell *matCellDef="let element" matTooltip="{{element.code}}"> {{element.code}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="DATA">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>Wydano dnia</th>
+    <td mat-cell *matCellDef="let element"> {{element.date | date: 'dd.MM.YYY hh:mm' }} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="EXPIRATION_DATE">
+    <th mat-header-cell *matHeaderCellDef
+        mat-sort-header>Termin ważności
+    </th>
+    <td mat-cell *matCellDef="let element">  {{element.expirationDate | date: 'dd.MM.YYY hh:mm' }}  </td>
+  </ng-container>
+
+  <ng-container matColumnDef="DOCTOR">
+    <th mat-header-cell *matHeaderCellDef
+        mat-sort-header>Wydano przez
+    </th>
+    <td mat-cell *matCellDef="let element"> {{element.doctor.name}}  {{element.doctor.surname}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="REFERENCE_TO">
+    <th mat-header-cell *matHeaderCellDef
+        mat-sort-header>Skierowanie do
+    </th>
+    <td mat-cell *matCellDef="let element"> {{element.referenceTo}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="DETAILS">
+    <th mat-header-cell *matHeaderCellDef
+        mat-sort-header>Opis
+    </th>
+    <td mat-cell matTooltip="{{element.details}}" *matCellDef="let element"> {{element.details}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="VISIT_ID">
+    <th mat-header-cell *matHeaderCellDef
+        mat-sort-header>Numer wizyty
+    </th>
+    <td mat-cell *matCellDef="let element"> {{element.visit.id}} </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+  <!--  <tr class="mat-row" *matNoDataRow>-->
+  <!--    <td class="mat-cell" colspan="4">No data matching the filter "{{reference.value}}"</td>-->
+  <!--  </tr>-->
+</table>
+<mat-paginator #paginator [pageSizeOptions]="[10, 25, 50, 100]"></mat-paginator>

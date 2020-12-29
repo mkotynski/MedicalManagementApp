@@ -6,14 +6,10 @@
 >
 </mwl-demo-utils-calendar-header>
 
-<!--<div>-->
-<!--  <button (click)="openDialog()" mat-button class="btn btn-primary"> Add new available visit date </button>-->
-<!--</div>-->
-
 <ng-template #loading>
   <div class="text-center">
     <i class="fas fa-spin fa-spinner fa-5x"></i> <br />
-    Loading events...
+    Ładowanie zdarzeń...
   </div>
 </ng-template>
 
@@ -26,6 +22,9 @@
       [activeDayIsOpen]="activeDayIsOpen"
       (eventClicked)="eventClicked($event.event)"
       [refresh]="refresh"
+      [locale]="locale"
+      [weekStartsOn]="weekStartsOn"
+      [weekendDays]="weekendDays">
     >
     </mwl-calendar-month-view>
     <mwl-calendar-week-view
@@ -36,6 +35,9 @@
       [refresh]="refresh"
       [dayStartHour]="9"
       [dayEndHour]="17"
+      [locale]="locale"
+      [weekStartsOn]="weekStartsOn"
+      [weekendDays]="weekendDays">
     >
     </mwl-calendar-week-view>
     <mwl-calendar-day-view
@@ -44,6 +46,9 @@
       [events]="events"
       (eventClicked)="eventClicked($event.event)"
       [refresh]="refresh"
+      [locale]="locale"
+      [weekStartsOn]="weekStartsOn"
+      [weekendDays]="weekendDays">
     >
     </mwl-calendar-day-view>
   </div>

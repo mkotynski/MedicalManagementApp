@@ -1,23 +1,18 @@
-import {ChangeDetectionStrategy, Component, Inject, OnInit, ViewEncapsulation} from '@angular/core';
-import {CalendarEvent, CalendarEventTimesChangedEvent, CalendarView} from 'angular-calendar';
-import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
+import {Component, OnInit} from '@angular/core';
+import {CalendarEvent, CalendarView, DAYS_OF_WEEK} from 'angular-calendar';
+import {MatDialog} from '@angular/material/dialog';
 import {Observable, Subject} from 'rxjs';
 import {ToastrService} from 'ngx-toastr';
 import {ActivatedRoute, Router} from '@angular/router';
-import {isSameDay, isSameMonth} from 'date-fns';
 import {AvailableDateModel} from '../../../model/available-date.model';
 import {VisitTypeModel} from '../../../model/visit-type.model';
 import {DoctorModel} from '../../../model/doctor.model';
 import {PatientModel} from '../../../model/patient.model';
 import {MedicalVisitModel} from '../../../model/medical-visit.model';
-import {AvailableDateService} from '../../../services/api/available-date.service';
 import {DateManagerService} from '../../../services/other/date-manager.service';
 import {PatientService} from '../../../services/api/patient.service';
 import {DoctorService} from '../../../services/api/doctor.service';
 import {MedicalVisitService} from '../../../services/api/medical-visit.service';
-import {RepeatablePeriod} from '../../../enum/repeatable-period.enum';
-import {VisitDurationTime} from '../../../enum/visit-duration-time.enum';
-import {HttpClient} from '@angular/common/http';
 
 @Component({
   selector: 'app-make-a-visit',
@@ -38,6 +33,11 @@ export class MakeAVisitComponent implements OnInit {
   refresh: Subject<any> = new Subject();
   availableDate: AvailableDateModel = {};
 
+  locale: string = 'en';
+
+  weekStartsOn: number = DAYS_OF_WEEK.MONDAY;
+
+  weekendDays: number[] = [DAYS_OF_WEEK.FRIDAY, DAYS_OF_WEEK.SATURDAY];
 
   constructor(private toasterService: ToastrService,
               private route: ActivatedRoute,
@@ -46,8 +46,7 @@ export class MakeAVisitComponent implements OnInit {
               private dateManager: DateManagerService,
               private medicalVisitService: MedicalVisitService,
               private patientService: PatientService,
-              private doctorService: DoctorService,
-  ) {
+              private doctorService: DoctorService) {
   }
 
   ngOnInit(): void {

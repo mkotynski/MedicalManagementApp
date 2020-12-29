@@ -1,0 +1,54 @@
+<h2 mat-dialog-title> FORMULARZ NOWEJRECEPTY</h2>
+<mat-dialog-content class="mat-typography">
+  <form class="row margin-auto">
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>KOD SKIEROWANIA:</mat-label>
+      <input matInput name="reference" disabled value="<WYGENEROWANO>"/>
+    </mat-form-field>
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>DATA:</mat-label>
+      <input matInput name="date" disabled value="{{today}}"/>
+    </mat-form-field>
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>WYBIERZ DATĘ WAŻNOŚCI</mat-label>
+      <input matInput [(ngModel)]="data.recipe.expirationDate" [matDatepicker]="picker" name="datePicker">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+    <button class="btn btn-green p50-width margin-top-20px margin-bottom-20px" (click)="addNewRecipePositionForm()" type="submit">Dodaj nową pozycję</button>
+    <table class="styled-table full-width" *ngIf="data.recipe.positions.length > 0">
+      <thead>
+      <tr>
+        <th style="width:20%">POZYCJA</th>
+        <th style="max-width:80%">OPIS</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let recipePosition of data.recipe.positions; let i = index">
+        <td>#{{i + 1}}</td>
+        <td>{{recipePosition.description}}</td>
+        <hr>
+      </tr>
+      </tbody>
+    </table>
+    <ng-container *ngIf="showNewRecipePositionForm">
+      <div class="styled-window full-width">
+        <mat-form-field class="margin-left-20px p90-width">
+          <mat-label>DETALE POZYCJI RECEPTY</mat-label>
+          <textarea [(ngModel)]="newRecipePosition.description" name="positionDescription"
+                    class="full-width styled-textarea"
+                    matInput></textarea>
+        </mat-form-field>
+        <div class="row" style="margin-left: auto;">
+          <button class="btn btn-success" (click)="addNewRecipePosition()" type="submit">Dodaj</button>
+          <button class="btn btn-danger" (click)="addNewRecipePositionForm()" type="button">Anuluj</button>
+        </div>
+      </div>
+    </ng-container>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Anuluj</button>
+  <button mat-button [mat-dialog-close]="true">Dodaj pozycję</button>
+</mat-dialog-actions>
+

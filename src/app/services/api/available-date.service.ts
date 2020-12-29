@@ -52,7 +52,7 @@ export class AvailableDateService {
         map(({results}: { results: AvailableDateModel[] }) => {
           return results.map((availableDateModel: AvailableDateModel) => {
             return {
-              title: availableDateModel.doctor.name + ' ' + availableDateModel.doctor.surname,
+              title: this.dateManagerService.parseDate(availableDateModel.date).toDateString(),
               start: new Date(this.dateManagerService.parseDate(availableDateModel.date)),
               end:  new Date(this.dateManagerService.parseDate(availableDateModel.endDate)),
               color: this.dateManagerService.returnEventColor(availableDateModel.reserved),
@@ -72,7 +72,7 @@ export class AvailableDateService {
         map(({results}: { results: AvailableDateModel[] }) => {
           return results.map((availableDateModel: AvailableDateModel) => {
             return {
-              title: availableDateModel.doctor.name + ' ' + availableDateModel.doctor.surname,
+              title: this.dateManagerService.parseDate(availableDateModel.date).toDateString(),
               start: new Date(this.dateManagerService.parseDate(availableDateModel.date)),
               end:  new Date(this.dateManagerService.parseDate(availableDateModel.endDate)),
               color: this.dateManagerService.returnEventColor(availableDateModel.reserved),
