@@ -19,6 +19,7 @@ export class CalendarComponent implements OnInit {
   medicalVisits: MedicalVisitModel[];
 
   events$: Observable<CalendarEvent<{ medicalVisit: MedicalVisitModel }>[]>;
+  locale = 'pl';
 
   constructor(private medicalVisitService: MedicalVisitService) {
   }

@@ -4,6 +4,7 @@ import {HttpClient, HttpResponse} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {createRequestOption} from '../../utils/request-util';
 import {DoctorModel} from '../../model/doctor.model';
+import {PatientModel} from '../../model/patient.model';
 
 type EntityResponseType = HttpResponse<DoctorModel>;
 type EntityArrayResponseType = HttpResponse<DoctorModel[]>;
@@ -37,6 +38,10 @@ export class DoctorService {
   query(req?: any): Observable<EntityArrayResponseType> {
     const options = createRequestOption(req);
     return this.http.get<DoctorModel[]>(this.resourceURL, {params: options, observe: 'response'});
+  }
+
+  findLogged(): Observable<EntityResponseType> {
+    return this.http.get<PatientModel>(`${this.resourceURL}/logged`, {observe: 'response'});
   }
 
 }

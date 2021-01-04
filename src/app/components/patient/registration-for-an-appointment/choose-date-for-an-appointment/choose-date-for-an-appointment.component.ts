@@ -5,17 +5,17 @@ import {Observable} from 'rxjs';
 import {ToastrService} from 'ngx-toastr';
 import {ActivatedRoute} from '@angular/router';
 import {isSameDay, isSameMonth} from 'date-fns';
-import {AvailableDateModel} from '../../../model/available-date.model';
-import {AvailableDateService} from '../../../services/api/available-date.service';
-import {DateManagerService} from '../../../services/other/date-manager.service';
-import {MedicalVisitService} from '../../../services/api/medical-visit.service';
-import {MedicalVisitModel} from '../../../model/medical-visit.model';
-import {VisitTypeService} from '../../../services/api/visit-type.service';
-import {VisitTypeModel} from '../../../model/visit-type.model';
-import {DoctorService} from '../../../services/api/doctor.service';
-import {DoctorModel} from '../../../model/doctor.model';
-import {PatientService} from '../../../services/api/patient.service';
-import {PatientModel} from '../../../model/patient.model';
+import {AvailableDateModel} from '../../../../model/available-date.model';
+import {AvailableDateService} from '../../../../services/api/available-date.service';
+import {DateManagerService} from '../../../../services/other/date-manager.service';
+import {MedicalVisitService} from '../../../../services/api/medical-visit.service';
+import {MedicalVisitModel} from '../../../../model/medical-visit.model';
+import {VisitTypeService} from '../../../../services/api/visit-type.service';
+import {VisitTypeModel} from '../../../../model/visit-type.model';
+import {DoctorService} from '../../../../services/api/doctor.service';
+import {DoctorModel} from '../../../../model/doctor.model';
+import {PatientService} from '../../../../services/api/patient.service';
+import {PatientModel} from '../../../../model/patient.model';
 
 @Component({
   selector: 'app-choose-date-for-an-appointment',
@@ -35,6 +35,7 @@ export class ChooseDateForAnAppointmentComponent implements OnInit {
   doctor: DoctorModel = {};
   patient: PatientModel = {};
   events$: Observable<CalendarEvent<{ availableDateModel: AvailableDateModel }>[]>;
+  locale = 'pl';
 
 
   constructor(private availableDateService: AvailableDateService,
@@ -129,7 +130,7 @@ export class ChooseDateForAnAppointmentComponent implements OnInit {
   }
 
   showOperationsSuccessfulToast() {
-    this.toastrService.success('TEXTS.OPERATION_END_SUCCESSFUL', 'Title');
+    this.toastrService.success('Poprawnie zarejestrowano termin wizyty', 'SUKCES');
   }
 
   showOperationErrorToast() {

@@ -72,7 +72,7 @@ export class MedicalVisitService {
         map(({results}: { results: MedicalVisitModel[] }) => {
           return results.map((medicalVisit: MedicalVisitModel) => {
             return {
-              title: medicalVisit.name,
+              title: this.dateManagerService.parseDate(medicalVisit.date) + '<br>' +  medicalVisit.patient.name + ' ' + medicalVisit.patient.surname,
               start: new Date(this.dateManagerService.parseDate(medicalVisit.date)),
               end:  new Date(this.dateManagerService.parseDate(medicalVisit.endDate)),
               color: this.dateManagerService.returnEventColor(medicalVisit.done),

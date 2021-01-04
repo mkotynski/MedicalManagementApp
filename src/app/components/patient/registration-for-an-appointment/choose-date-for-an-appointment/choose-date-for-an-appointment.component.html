@@ -1,3 +1,5 @@
+<h2>REZERWACJA WIZYTY - WYBÓR TERMINU</h2>
+
 <mwl-demo-utils-calendar-header
   [(view)]="view"
   [(viewDate)]="viewDate"
@@ -22,6 +24,7 @@
       [activeDayIsOpen]="activeDayIsOpen"
       (dayClicked)="dayClicked($event.day)"
       (eventClicked)="eventClicked($event.event)"
+      [locale]="locale"
     >
     </mwl-calendar-month-view>
     <mwl-calendar-week-view
@@ -31,6 +34,7 @@
       [dayStartHour]="9"
       [dayEndHour]="17"
       (eventClicked)="eventClicked($event.event)"
+      [locale]="locale"
     >
     </mwl-calendar-week-view>
     <mwl-calendar-day-view
@@ -38,6 +42,7 @@
       [viewDate]="viewDate"
       [events]="events"
       (eventClicked)="eventClicked($event.event)"
+      [locale]="locale"
     >
     </mwl-calendar-day-view>
   </div>

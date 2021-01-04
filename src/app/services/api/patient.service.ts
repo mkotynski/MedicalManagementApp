@@ -39,8 +39,8 @@ export class PatientService {
     return this.http.get<PatientModel[]>(this.resourceURL, {params: options, observe: 'response'});
   }
 
-  patient(): Observable<Object> {
-    return this.http.get<Object>(`${SERVER_API_URL}/api/actual-patient`, {observe: 'response'});
+  findLogged(): Observable<EntityResponseType> {
+    return this.http.get<PatientModel>(`${this.resourceURL}/logged`, {observe: 'response'});
   }
 
 }

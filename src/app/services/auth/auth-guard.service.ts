@@ -8,7 +8,6 @@ import {AuthService} from './auth.service';
 export class AuthGuard implements CanActivate, OnInit {
 
   constructor(private ck: AuthService) {
-    console.log('INIT AuthGuard: ' + AuthService.auth.loggedIn );
   }
 
   ngOnInit() {
@@ -16,8 +15,8 @@ export class AuthGuard implements CanActivate, OnInit {
   }
 
   canActivate() {
-    console.log('check guard: ' + AuthService.auth.loggedIn);
     return AuthService.auth.loggedIn;
   }
 
 }
+

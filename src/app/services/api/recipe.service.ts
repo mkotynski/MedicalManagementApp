@@ -4,6 +4,7 @@ import {HttpClient, HttpResponse} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {createRequestOption} from '../../utils/request-util';
 import {RecipeModel} from '../../model/recipe.model';
+import {ReferenceModel} from '../../model/reference.model';
 
 type EntityResponseType = HttpResponse<RecipeModel>;
 type EntityArrayResponseType = HttpResponse<RecipeModel[]>;
@@ -41,4 +42,8 @@ export class RecipeService {
   findByMedicalVisitId(id: number): Observable<EntityArrayResponseType> {
     return this.http.get<RecipeModel[]>(`${this.resourceURL}/by-visit-id/${id}`, {observe: 'response'});
   }
+
+  findAllOfSubject(): Observable<EntityArrayResponseType> {
+  return this.http.get<RecipeModel[]>(`${this.resourceURL}/of-subject`, {observe: 'response'});
+}
 }

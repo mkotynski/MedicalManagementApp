@@ -176,7 +176,6 @@ export class VisitFormComponent implements OnInit {
   }
 
   openReferenceDialog() {
-    console.log(this.newReference);
     const dialogRef = this.dialog.open(AddNewReferenceDialogComponent, {
       width: '40%',
       data: {reference: this.newReference}
@@ -188,7 +187,6 @@ export class VisitFormComponent implements OnInit {
   }
 
   openRecipeDialog() {
-    console.log(this.newReference);
     const dialogRef = this.dialog.open(AddNewRecipeDialogComponent, {
       width: '40%',
       data: {recipe: this.newRecipe}

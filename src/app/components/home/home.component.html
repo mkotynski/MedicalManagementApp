@@ -1,0 +1,14 @@
+<ng-container *ifRoles="['patient']">
+  <h2> Witaj w systemie placówki medycznej {{loggedPatient.name}} {{loggedPatient.surname}}!</h2>
+  <p> Po Twojej lewej stronię znajdują możliwe operacje jakie możesz wykonać z użyciem konta.</p>
+  <p> Aby zarezerować termin wizyty wybierz opcję <i>Rezerwacja terminu wizyty</i>. Nastepnie pojawi Ci się lista lekarzy dostepnych w naszej placówce.
+  Po wybraniu jednego z nich, uzyskasz dostep do kalendarza dostępnych terminów wizyt danego lekarza. Wybierz datę i zarezerwuj wizytę</p>
+</ng-container>
+
+<ng-container *ifRoles="['doctor']">
+  <h2> Witaj w systemie placówki medycznej {{loggedDoctor.name}} {{loggedDoctor.surname}}!</h2>
+  <p> Po Twojej lewej stronię znajdują możliwe operacje jakie możesz wykonać z użyciem konta.</p>
+  <p> Aby wykonać proces wizyty kliknij po prawo opcje <i>Wykonaj wizytę</i>. Nastepnie po wybraniu z kalendarza wizyty do wykonania pojawi się formularz tej wizyty.
+    Tam uzyskujesz dostęp do wydawania recept, skierowań czy płatności związanych z wykonaną wizytą.</p>
+</ng-container>
+

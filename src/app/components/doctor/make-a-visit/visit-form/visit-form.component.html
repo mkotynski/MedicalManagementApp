@@ -38,9 +38,9 @@
           <div>
             <h3 class="margin-0 styled-h3" style="padding:10px">OPCJE WIZYTY</h3>
           </div>
-          <button class="btn btn-primary p80-width margin-auto" (click)="openRecipeDialog()">DOŁĄCZ RECEPTE</button>
+          <button class="btn btn-primary p80-width margin-auto" (click)="openRecipeDialog()">DODAJ RECEPTE</button>
           <button class="btn btn-primary p80-width margin-top-20px margin-left-right-auto"
-                  (click)="openReferenceDialog()">DOŁĄCZ SKIEROWANIE
+                  (click)="openReferenceDialog()">DODAJ SKIEROWANIE
           </button>
           <button class="btn btn-primary p80-width margin-top-20px margin-left-right-auto"
                   (click)="openReceiptDialog()">RACHUNEK ZA WIZYTĘ
@@ -60,7 +60,7 @@
 
       <!-- RECIPES LIST-->
       <div class="margin-top-20px" *ngIf="recipes.length > 0">
-        <h2 class="styled-h2">DOŁĄCZONE RECEPTY</h2>
+        <h2 class="styled-h2">WYDANE RECEPTY</h2>
         <table class="styled-table full-width">
           <thead>
           <tr>
@@ -100,7 +100,7 @@
 
       <!-- REFERENCES LIST-->
       <div class="margin-top-20px" *ngIf="references.length > 0">
-        <h2 class="styled-h2">DOŁĄCZONE SKIEROWANIA</h2>
+        <h2 class="styled-h2">WYDANE SKIEROWANIA</h2>
         <table class="styled-table full-width">
           <thead>
           <tr>

@@ -18,13 +18,7 @@ export class AuthService {
             + 'realms/MFMS/protocol/openid-connect/logout?redirect_uri='
             + document.baseURI;
           AuthService.auth.roles = keycloakAuth.realmAccess.roles;
-          // AuthService.auth.keycloak.loadUserProfile().success(function(){
-          //   console.log(AuthService.auth.keycloak.profile);
-          //
-          // });
-
           AuthService.auth.currentUserDetails = AuthService.auth.keycloak.loadUserProfile();
-          //AuthService.currentUserDetails = keycloakAuth.profile.attributes.id[1];
           console.log(AuthService.auth);
           resolve();
         })

@@ -1,11 +1,25 @@
+<h2>REZERWACJA WIZYTY - SPIS LEKARZY</h2>
+<mat-form-field class="full-width" appearance="fill">
+  <mat-label> Filtruj po specjalizacji lekarza</mat-label>
+  <mat-select name="visitType" [(ngModel)]="spec" (selectionChange)="filterBySpec()">
+    <mat-option *ngFor="let r of specializations" [value]="r">
+      {{ r.name }}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
 <div class="content" xmlns:th="http://www.w3.org/1999/xhtml">
-  <ng-template ngFor let-item [ngForOf]="doctors" let-i="index">
+  <ng-template ngFor let-item [ngForOf]="doctorsToshow" let-i="index">
     <div class="box-content row">
-      <div class="box-avatar"><img style="width:180px;height: 180px;" src="assets/images/doctor.png" th:src="@{assets/images/doctor.png}"/></div>
+      <div class="box-avatar"><img style="width:180px;height: 180px;" src="assets/images/doctor.png"
+                                   th:src="@{assets/images/doctor.png}"/></div>
       <div class="box-info-data column">
-        <div class="margin-10px font-size-26">{{item.name}} {{item.surname}}</div>
+        <div class="margin-10px font-size-26">dr. {{item.name}} {{item.surname}}</div>
         <div class="margin-10px">{{item.specializationType.name}}</div>
-        <div style="margin-top:auto;font-size:17px;"><button [routerLink]="'./'+item.id+'/choose-date'" mat-button class="btn btn-primary"> register for the visit </button></div>
+        <div style="margin-top:auto;font-size:17px;">
+          <button [routerLink]="'./'+item.id+'/choose-date'" mat-button class="btn btn-primary"> Zarejestruj się na
+            wizytę
+          </button>
+        </div>
       </div>
       <div class="box-stars">*****</div>
 

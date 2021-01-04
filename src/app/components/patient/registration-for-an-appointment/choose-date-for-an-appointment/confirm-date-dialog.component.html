@@ -1,0 +1,18 @@
+<h2 mat-dialog-title>Potwierdzanie terminu wizyty</h2>
+<mat-label class="font-size-26">{{ date | date: 'dd.MM.YYYY hh:mm'}}</mat-label> <br>
+<mat-label> Czy jesteś pewny, że chciałbyś zarezerwować ten termin wizyty?</mat-label>
+<br>
+<mat-form-field>
+  <mat-label>Określ typ wizyty</mat-label>
+  <mat-select required [(ngModel)]="data.visitType" name="visitType">
+    <mat-option *ngFor="let vt of visitTypes" [value]="vt">
+      {{ vt.name }}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
+<mat-dialog-actions>
+  <button class="mat-raised-button" (click)="onNoClick()">Anuluj</button>
+  <button class="mat-raised-button mat-primary" (click)="data.confirm = true"
+          [mat-dialog-close]="data">Potwierdź</button>
+</mat-dialog-actions>
+

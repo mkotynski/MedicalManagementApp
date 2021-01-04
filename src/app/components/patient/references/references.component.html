@@ -1,3 +1,4 @@
+<h2> SPIS SKIEROWAŃ PACJENTA</h2>
 <table mat-table [dataSource]="references" class="full-width" matSort>
 
   <ng-container matColumnDef="CODE">
@@ -47,9 +48,5 @@
 
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-
-  <!--  <tr class="mat-row" *matNoDataRow>-->
-  <!--    <td class="mat-cell" colspan="4">No data matching the filter "{{reference.value}}"</td>-->
-  <!--  </tr>-->
 </table>
 <mat-paginator #paginator [pageSizeOptions]="[10, 25, 50, 100]"></mat-paginator>

@@ -1,5 +1,5 @@
-<mat-sidenav-container>
-  <mat-sidenav  #sidenav role="navigation">
+<mat-sidenav-container xmlns:th="http://www.w3.org/1999/xhtml">
+  <mat-sidenav #sidenav role="navigation">
     <mat-nav-list>
       <a mat-list-item>
         <mat-icon class="icon">input</mat-icon>
@@ -13,7 +13,7 @@
         <mat-icon class="icon">dashboard</mat-icon>
         <span class="label">Dashboard</span>
       </a>
-      <a  mat-list-item type="button">
+      <a mat-list-item type="button">
         <mat-icon class="icon">input</mat-icon>
         <span class="label">LogOut</span>
       </a>
@@ -21,36 +21,25 @@
   </mat-sidenav>
   <mat-sidenav-content>
     <mat-toolbar color="primary">
-      <div fxHide.gt-xs>
-        <button mat-icon-button>
-          <mat-icon>menu</mat-icon>
-        </button>
-      </div>
       <div>
         <a [routerLink]="''">
-          Material Blog
+          SYSTEM ZARZĄDZANIA PLACÓWKĄ MEDYCZNĄ
         </a>
       </div>
-      <div fxFlex fxLayout fxLayoutAlign="flex-end"  fxHide.xs>
+      <div fxFlex fxLayout fxLayoutAlign="flex-end" fxHide.xs>
         <ul fxLayout fxLayoutGap="20px" class="navigation-items">
           <li>
           </li>
           <li>
-            <a >
-              <mat-icon class="icon">home</mat-icon>
-              <span class="label">Home</span>
-            </a>
-          </li>
-          <li>
             <a>
-              <mat-icon class="icon">dashboard</mat-icon>
-              <span class="label">Dashboard</span>
+              <mat-icon class="icon">home</mat-icon>
+              <span class="label">Główna</span>
             </a>
           </li>
           <li>
             <a (click)="logout()">
               <mat-icon class="icon">input</mat-icon>
-              <span class="label">LogOut</span>
+              <span class="label">Wyloguj</span>
             </a>
           </li>
         </ul>
@@ -60,24 +49,62 @@
       <div class="container row">
         <div class="column left-side-nav">
           <ng-container *ifRoles='["patient"]'>
-            <button [routerLink]="'./calendar'" mat-raised-button mat-button color="primary"  class="button-style margin-top-2pp">Kalendarz</button>
-            <button [routerLink]="'./register-for-an-appointment'" mat-raised-button mat-button color="primary" class="button-style margin-top-2pp">Rezerwacja terminu wizyty</button>
-            <button [routerLink]="'./patient-visit-history'" mat-raised-button mat-button color="primary" class="button-style margin-top-2pp">Historia wizyt</button>
-            <button [routerLink]="'./references'" mat-raised-button mat-button color="primary" class="button-style margin-top-2pp">Skierowania</button>
-            <button [routerLink]="'./recipes'" mat-raised-button mat-button color="primary" class="button-style margin-top-2pp">Recepty</button>
-<!--            <button [routerLink]="'./edm'" mat-raised-button mat-button color="primary" class="button-style margin-top-2pp">EDM</button>-->
+            <button [routerLink]="'./calendar'" mat-raised-button mat-button color="primary"
+                    class="button-style margin-top-2pp">Kalendarz
+            </button>
+            <button [routerLink]="'./register-for-an-appointment'" mat-raised-button mat-button color="primary"
+                    class="button-style margin-top-2pp">Rezerwacja terminu wizyty
+            </button>
+            <button [routerLink]="'./patient-visit-history'" mat-raised-button mat-button color="primary"
+                    class="button-style margin-top-2pp">Historia wizyt
+            </button>
+            <button [routerLink]="'./references'" mat-raised-button mat-button color="primary"
+                    class="button-style margin-top-2pp">Skierowania
+            </button>
+            <button [routerLink]="'./recipes'" mat-raised-button mat-button color="primary"
+                    class="button-style margin-top-2pp">Recepty
+            </button>
+            <button [routerLink]="'./receipts'" mat-raised-button mat-button color="primary"
+                    class="button-style margin-top-2pp">Płatności
+            </button>
+            <button [routerLink]="'./settings-patient'" mat-raised-button mat-button color="primary"
+                    class="button-style margin-top-2pp">Ustawienia
+            </button>
+            <!--            <button [routerLink]="'./edm'" mat-raised-button mat-button color="primary" class="button-style margin-top-2pp">EDM</button>-->
           </ng-container>
           <ng-container *ifRoles='["doctor"]'>
-            <button [routerLink]="'./set-available-date-for-the-visit'" mat-raised-button mat-button color="primary" class="button-style margin-top-2pp">Dostępne terminy</button>
-            <button [routerLink]="'./make-a-visit'" mat-raised-button mat-button color="primary" class="button-style margin-top-2pp">Wykonaj wizytę</button>
-            <button [routerLink]="'./visits-history'" mat-raised-button mat-button color="primary" class="button-style margin-top-2pp">Historia wizyt</button>
+            <button [routerLink]="'./set-available-date-for-the-visit'" mat-raised-button mat-button color="primary"
+                    class="button-style margin-top-2pp">Dostępne terminy
+            </button>
+            <button [routerLink]="'./make-a-visit'" mat-raised-button mat-button color="primary"
+                    class="button-style margin-top-2pp">Wykonaj wizytę
+            </button>
+            <button [routerLink]="'./visits-history'" mat-raised-button mat-button color="primary"
+                    class="button-style margin-top-2pp">Historia wizyt
+            </button>
+            <button [routerLink]="'./settings-doctor'" mat-raised-button mat-button color="primary"
+                    class="button-style margin-top-2pp">Ustawienia
+            </button>
           </ng-container>
         </div>
         <div class="router">
           <router-outlet></router-outlet>
         </div>
-        <div class="column right-side-nav">
-          <div style="width:100px; height:100px;border:1px solid blueviolet"></div>
+        <div class="column right-side-nav margin-top-2pp">
+          <h2> Dane użytkownika </h2>
+          <img style="width:180px;height: 180px;" src="assets/images/avatar.png" th:src="@{assets/images/avatar.png}"/>
+          <ng-container *ifRoles="['patient']">
+            <span class="margin-auto"> {{ loggedPatient.name }} {{ loggedPatient.surname}}</span>
+            <span class="margin-auto"> Data rejestracji:</span>
+            <span class="margin-auto"> {{ loggedPatient.dateOfRegister | date: 'dd.MM.YYYY hh:mm'}}</span>
+          </ng-container>
+          <ng-container *ifRoles="['doctor']">
+            <span class="margin-auto"> {{ loggedDoctor.name }} {{ loggedDoctor.surname}}</span>
+            <span class="margin-auto"> Data zatrudnienia:</span>
+            <span class="margin-auto"> {{ loggedDoctor.dateOfEmployment | date: 'dd.MM.YYYY hh:mm'}}</span>
+            <span class="margin-auto"> Specjalizacja: </span>
+            <span class="margin-auto"> {{ loggedDoctor.specializationType.name }}</span>
+          </ng-container>
         </div>
       </div>
     </main>

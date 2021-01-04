@@ -1,0 +1,36 @@
+<h2 mat-dialog-title> SZCZEGÓŁY RECEPTY</h2>
+<mat-dialog-content class="mat-typography">
+  <form class="row margin-auto">
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>KOD SKIEROWANIA:</mat-label>
+      <input matInput name="reference" disabled value="{{ data.recipe.code }}"/>
+    </mat-form-field>
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>DATA:</mat-label>
+      <input matInput name="date" disabled value="{{ data.recipe.date | date: 'dd.MM.YYY hh:mm' }}"/>
+    </mat-form-field>
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>DATA WAŻNOŚCI:</mat-label>
+      <input matInput name="date" disabled value="{{ data.recipe.expirationDate | date: 'dd.MM.YYY hh:mm' }}"/>
+    </mat-form-field>
+    <table class="styled-table full-width" *ngIf="data.recipe.positions.length > 0">
+      <thead>
+      <tr>
+        <th style="width:20%">POZYCJA</th>
+        <th style="max-width:80%">OPIS</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let recipePosition of data.recipe.positions; let i = index">
+        <td>#{{i + 1}}</td>
+        <td>{{recipePosition.description}}</td>
+        <hr>
+      </tr>
+      </tbody>
+    </table>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Zamknij</button>
+</mat-dialog-actions>
+

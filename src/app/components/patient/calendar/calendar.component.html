@@ -1,3 +1,5 @@
+<h2>KALENDARZ WIZYT</h2>
+
 <mwl-demo-utils-calendar-header
   [(view)]="view"
   [(viewDate)]="viewDate"
@@ -9,7 +11,7 @@
 <ng-template #loading>
   <div class="text-center">
     <em class="fas fa-spin fa-spinner fa-5x"></em> <br />
-    Loading events...
+     Ładowanie zdarzeń...
   </div>
 </ng-template>
 
@@ -19,6 +21,7 @@
       *ngSwitchCase="'month'"
       [viewDate]="viewDate"
       [events]="events"
+      [locale]="locale"
     >
     </mwl-calendar-month-view>
     <mwl-calendar-week-view
@@ -27,6 +30,7 @@
       [events]="events"
       [dayStartHour]="9"
       [dayEndHour]="17"
+      [locale]="locale"
     >
     </mwl-calendar-week-view>
     <mwl-calendar-day-view
@@ -35,6 +39,7 @@
       [events]="events"
       [dayStartHour]="9"
       [dayEndHour]="17"
+      [locale]="locale"
     >
     </mwl-calendar-day-view>
   </div>
